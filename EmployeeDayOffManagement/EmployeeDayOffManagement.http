@@ -1,0 +1,6 @@
+@EmployeeDayOffManagement_HostAddress = http://localhost:5257
+
+GET {{EmployeeDayOffManagement_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
