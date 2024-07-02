@@ -25,7 +25,7 @@ public class EmployeeController : ControllerBase
         return Ok(employees);
     }
     
-    [HttpGet(Name = "GetEmployee")]
+    [HttpGet("GetEmployee/{id}")]
     public async Task<IActionResult> GetEmployee(string id)
     {
         var employee = await _employeeService.GetEmployee(id);
@@ -49,7 +49,7 @@ public class EmployeeController : ControllerBase
         return Ok();
     }
 
-    [HttpDelete(Name = "DeleteEmployee")]
+    [HttpDelete("DeleteEmployee/{id}")]
     public async Task<IActionResult> DeleteEmployee(string id)
     {
         await _employeeService.DeleteEmployee(id);

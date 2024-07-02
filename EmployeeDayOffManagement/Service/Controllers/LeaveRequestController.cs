@@ -17,37 +17,42 @@ public class LeaveRequestController : ControllerBase
         _leaveRequestService = leaveRequestService;
     }
     
-    [HttpGet]
-    public async Task<IActionResult> GetAllRequests()
+    [HttpGet(Name = "GetAllRequests")]
+    [Authorize(Policy = "UserOnly")]
+    public async Task<IActionResult> GetLeaveRequests()
     {
         var employeeId = User.Identity.Name; 
         var requests = await _leaveRequestService.GetAllRequests(employeeId);
         return Ok(requests);
     }
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetRequest(int id)
+    [HttpGet("GetRequest/{id}")]
+    [Authorize(Policy = "ManagerOnly")]
+    public async Task<IActionResult> GetLeaveRequest(int id)
     {
         var request = await _leaveRequestService.GetRequest(id);
         return Ok(request);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> CreateRequest(CreateLeaveRequestDto requestDto)
+    [HttpPost(Name = "CreateRequest")]
+    [Authorize(Policy = "UserOnly")]
+    public async Task<IActionResult> CreateLeaveRequest(CreateLeaveRequestDto requestDto)
     {
         await _leaveRequestService.CreateRequest(requestDto);
         return Ok();
     }
 
-    [HttpPut]
-    public async Task<IActionResult> UpdateRequest(LeaveRequestDto requestDto)
+    [HttpPut(Name = "UpdateRequest")]
+    [Authorize(Policy = "ManagerOnly")]
+    public async Task<IActionResult> UpdateLeaveRequest(LeaveRequestDto requestDto)
     {
         await _leaveRequestService.UpdateRequest(requestDto);
         return Ok();
     }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteRequest(int id)
+    [HttpDelete("DeleteRequest/{id}")]
+    [Authorize(Policy = "ManagerOnly")]
+    public async Task<IActionResult> DeleteLeaveRequest(int id)
     {
         await _leaveRequestService.DeleteRequest(id);
         return Ok();

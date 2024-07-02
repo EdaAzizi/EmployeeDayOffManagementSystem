@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace EmployeeDayOffManagement.Core.Entities;
 
 public class Employee
@@ -9,6 +11,9 @@ public class Employee
     public string ReportsTo { get; set; } 
     public DateTime DateOfBirth { get; set; }
     public DateTime DateJoined { get; set; } = DateTime.Now;
+    public string RoleId { get; set; }
+    [ForeignKey("RoleId")]
+    public Role Role { get; set; }
     public ICollection<LeaveRequest> LeaveRequests { get; set; }
     public ICollection<LeaveAllocation> LeaveAllocations { get; set; }
     public ICollection<Employee> Subordinates { get; set; }

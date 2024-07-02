@@ -80,6 +80,19 @@ builder.Services.AddAuthentication(options =>
     options.ForwardDefaultSelector = Selector.ForwardReferenceToken("token");
 });
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy =>
+        policy.RequireRole("Admin"));
+
+    options.AddPolicy("ManagerOnly", policy =>
+        policy.RequireRole("Manager"));
+
+    options.AddPolicy("UserOnly", policy =>
+        policy.RequireRole("User"));
+});
+
+
 
 var app = builder.Build();
 
