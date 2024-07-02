@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeDayOffManagement.Application.LeaveAccumulator;
 
-public class LeaveAccumulatorService : BackgroundService
+public class LeaveAccumulatorService 
 {
     private readonly ILogger<LeaveAccumulatorService> _logger;
     private readonly IUnitOfWork _unitOfWork;
@@ -15,16 +15,13 @@ public class LeaveAccumulatorService : BackgroundService
         _logger = logger;
     }
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected async Task ExecuteAsync()
     {
-        while (!stoppingToken.IsCancellationRequested)
-        {
-            await AccumulateAnnualLeave();
+        await AccumulateAnnualLeave();
 
-            await ResetLeaveAtYearStart();
+        await ResetLeaveAtYearStart();
 
-            await Task.Delay(TimeSpan.FromDays(1), stoppingToken);
-        }
+        await Task.Delay(TimeSpan.FromDays(1));
     }
 
     public async Task AccumulateAnnualLeave()
